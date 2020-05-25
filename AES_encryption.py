@@ -379,7 +379,7 @@ def gen_128_bit_keys(key):
     if len(key) > 16:
 
         print("********************************************************")
-        print("** Your passwords' too long. This is'nt going to work **")
+        print("** Your password is too long. This isn't going to work **")
         print("********************************************************")
     
     #convert the password into a number
@@ -444,7 +444,7 @@ def gen_192_bit_keys(key):
     if len(key) > 24:
 
         print("********************************************************")
-        print("** Your passwords' too long. This is'nt going to work **")
+        print("** Your passwords is too long. This isn't going to work **")
         print("********************************************************")
 
     #convert the password into a number
@@ -528,7 +528,7 @@ def gen_256_bit_keys(key):
     if len(key) > 32:
 
         print("********************************************************")
-        print("** Your passwords' too long. This is'nt going to work **")
+        print("** Your passwords is too long. This isn't going to work **")
         print("********************************************************")
 
     #convert the password into a number
@@ -647,6 +647,23 @@ def first_key_addition(message, W):
 
 #then move through a s-box
 def byte_substitution(M):
+    #I think this might be 90o to what it should be 
+    
+    #I think this is:-
+    #b0, b1, b2, b3
+    #b4, b5, b6, b7,
+    #b8, b9, b10, b11
+    #b12, b13, b14, b15
+    
+    #when it is meant to be 
+    #b0, b4, b8, b12
+    #b1, b5, b9, b13
+    #b2, b6, b10, b14
+    #b3, b7, b11, b15
+    
+    #This should be noted but I'm not sure how
+    #important it is to the overall process so I'll
+    #leave it as it is for now
 
     for i in range(len(M)):
 
@@ -666,6 +683,7 @@ def byte_substitution(M):
 
 #then do the shift rows
 def shift_rows(M):
+
 
     #turn the M values into a matrix
     T = transpose_matrix(M)
@@ -788,7 +806,8 @@ def Inv_byte_substitution(M):
 
             c.append(AES_inv_S_box(t))
 
-        
+    #This is where we convert to a matrix
+
     C = []
     for i in range(4):
         m = ''
@@ -797,7 +816,7 @@ def Inv_byte_substitution(M):
             m = m + c[(4*i)+l]
 
         C.append(m)
-
+    
     return C
 
 
@@ -858,10 +877,10 @@ def Inv_mix_col(M):
     return C
 
 #inverse of the shift rows step
-def Inv_shift_rows(M):
+def Inv_shift_rows(T):
 
     #turn the M values into a matrix
-    T = M
+    #T = M
 
     #shuffle the bytes
     M = [[T[0][0], T[0][1], T[0][2], T[0][3]],
@@ -902,6 +921,10 @@ def Inv_key_addition(M, W, r):
 def AES_encrypt_block(message, W):
     
     M = first_key_addition(message, W)
+    
+    print('AFTER FIRST KEY ADDITION')
+    print(M)
+    print('----')
 
     if len(W) == 44:
         rounds = 10
@@ -914,9 +937,17 @@ def AES_encrypt_block(message, W):
     for r in range(rounds):
 
         #now enter the round functions
+        
+        print('BEOFRE BYTE SUBSTITUTION')
+        print(M)
+        print('---')
 
-        #byte substitution step
+        #byte substitution step, this also converts to a matrix
         M = byte_substitution(M)
+        
+        print('AFTER BYTE SUBSTITUTION')
+        print(M)
+        print('++++')
 
 
         #Shift rows step
@@ -1097,9 +1128,6 @@ def AES_decrypt(Cypher_text, password, key_length = 128):
     elif key_length == 256:
 
         W = gen_256_bit_keys(password)
-
-    
-
 
     #split the cypher text into blocks
     C = []
