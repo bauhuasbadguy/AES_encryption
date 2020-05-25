@@ -7,6 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="96"
+   inkscape:export-xdpi="96"
+   inkscape:export-filename="/home/stuart/Documents/encrytion_stuff/AES_encryption/images/AES_block_diagram.png"
    sodipodi:docname="AES_block_diagram.svg"
    inkscape:version="1.0 (6e3e5246a0, 2020-05-07)"
    id="svg1048"
@@ -328,6 +331,13 @@
       <g
          id="g3027"
          transform="translate(-31.966496,-50.78164)">
+        <rect
+           y="21.75153"
+           x="30.162102"
+           height="302.72906"
+           width="167.63795"
+           id="rect7725"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:0.991209;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
         <rect
            y="61.273361"
            x="122.45821"
