@@ -15,7 +15,6 @@ The first step is to create a list of subkeys which will be used in the encrypti
 ### Subkey generation ###
 
 | i              | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 |
-|----------------|----|----|----|----|----|----|----|----|----|----|
 | rc<sub>i</sub> | 01 | 02 | 04 | 08 | 10 | 20 | 40 | 80 | 1B | 36 |
 
 
