@@ -35,7 +35,7 @@ When i is not divisable by N then the new word is found using the logic shown be
 
 W<sub>i</sub> = W<sub>i-N</sub> &bigoplus; W<sub>i-1</sub>
 
-This process is repeated until 44, 32 bit words have been generated, allowing for 10 AddRoundKey steps and the introductary AddKey step.
+This process is repeated until 44, 32 bit words have been generated, allowing for 10 AddRoundKey steps and the introductory AddKey step.
 
 
 #### Generation of subkeys in AES-192 ####
@@ -97,11 +97,13 @@ We will now discus each of these steps in turn.
 
 #### subBytes step ####
 
-This step can be further subdivied into two sub steps. In the first step the multiplicative inverse of each element of the 4X4 matrix is found. Next the affine transformation is applied to each byte. These steps can be performed as a single substitution box applied to each byte since each byte is only 8 bits long however in a memory constrained environment the calculation could be performed for each byte in the matrix with a trade off of computation time. This also helps avoid ambiguity around the origin of the substitution boxes to avoid accusations of shenanigans.
+This step can be further subdivided into two sub steps. In the first step the multiplicative inverse of each element of the 4X4 matrix is found. Next the affine transformation is applied to each byte. 
+
+These steps can be performed as a single substitution box applied to each byte since each byte is only 8 bits long which is what I did in my code. In a memory constrained environment however the calculation could be performed for each byte in the matrix with a trade off of computation time. This also helps avoid ambiguity around the origin of the substitution boxes to avoid accusations of shenanigans.
 
 #### shiftRows step ####
 
-In this step the rows are shifted according to the row number they are in, so each element of row 0 is moved over zero columsn and each element of row 1 is shifted over by one element. This can be seen much more intuitivly in the diagram below
+In this step the rows are shifted according to the row number they are in, so each element of row 0 is moved over zero columns and each element of row 1 is shifted over by one element. This can be seen much more intuitively in the diagram below.
 
 <p>
 <image src = './images/shiftRows_example.png' width="350px;"></image>
@@ -142,5 +144,3 @@ In order to decrypt the cyphertext and recover the original blocks the procedure
 * https://en.wikipedia.org/wiki/AES_key_schedule
 * https://en.wikipedia.org/wiki/Rijndael_S-box
 * https://en.wikipedia.org/wiki/Rijndael_MixColumns
-
-# I'm not sure I'm generating the keys correctly !!!!!#
