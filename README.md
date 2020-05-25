@@ -13,12 +13,47 @@ The first step is to create a list of subkeys which will be used in the encrypti
 
 ### Subkey generation ###
 
-# SECTION UNFINISHED #
+The generation of the subkeys works very slightly differently depending on the keylength used. 
+
+#### Generation of subkeys in AES-128 ####
+
+The first 4, 32 bit words are simply the key. Next the rcon value is set to 1 and we calculate the result of the g function. This takes the last 32 bit word and applies the following logic to it
+
+g(W<sub>i</sub>) = SubWord(RotWord(W<sub>i</sub>)) &bigoplus; RC<sub>i/N</sub>
+
+where RotWord is a 8 bit circular shift and SubWord applies a substitution box to each byte in the word. The value of RC<sub>i/N</sub> is given by the table below. Note these values are the same for all versions of AES so it will not be restated. Also note that the values for RC<sub>j</sub> are expressed in base 16.
 
 | i              | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 |
 |----------------|----|----|----|----|----|----|----|----|----|----|
-| rc<sub>i</sub> | 01 | 02 | 04 | 08 | 10 | 20 | 40 | 80 | 1B | 36 |
+| RC<sub>j</sub> | 01 | 02 | 04 | 08 | 10 | 20 | 40 | 80 | 1B | 36 |
 
+This then gives a result where if the word number, i, satisfies i%N = 0 and i >=N then the new word W<sub>i</sub> is given by the following expression.
+
+W<sub>i = W<sub>i-N</sub> &bigoplus; g(W<sub>i-1</sub>)
+
+When i is not divisable by N then the new word is found using the logic shown below.
+
+W<sub>i</sub> = W<sub>i-N</sub> &bigoplus; W<sub>i-1</sub>
+
+This process is repeated until 44, 32 bit words have been generated, allowing for 10 AddRoundKey steps and the introductary AddKey step.
+
+
+#### Generation of subkeys in AES-192 ####
+
+The process for generating the subkeys for AES-192 is very similar except that we generate 52, 32 bit words which can be collected into 13, 128 bit subkeys to be used in the encryption process. This is done using the same logic as the AES-128 case however since N is larger the application of the g function will occur for every 6 words rather than every 4.
+
+
+#### Generation of subkeys in AES-256 ####
+
+The process is again similar however there is an extra function to consider, the h function. This will be used when i%N =4 and is described below
+
+h(W<sub>i</sub>) = SubWord(W<sub>i</sub>)
+
+meaning that when i%N = 4 the new word will be generated according to the logic shown below.
+
+W<sub>i</sub> = W<sub>i-N</sub> &bigoplus; h(W<sub>i-1</sub>)
+
+Otherwise the logic will remain the same with N=8 and will generate 60, 32 bit words which may be collected into 15, 128 bit subkeys.
 
 ### Encryption procedure ###
 
@@ -56,6 +91,7 @@ This procedure is shown in a very basic block diagram below
 <image src = './images/AES_block_diagram.png' width="500px;"></image>
 </p>
 
+(Note I convert from message to list to matrix and back again many times in my shockingly poor implementation, you should not do this but I'm too lazy to go back and fix it. I wrote this code 4 years ago and am only now doing the README.)
 
 We will now discus each of these steps in turn.
 
@@ -102,8 +138,9 @@ In order to decrypt the cyphertext and recover the original blocks the procedure
 
 * https://sites.math.washington.edu/~morrow/336_12/papers/juan.pdf
 * https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+* https://www.samiam.org/key-schedule.html
 * https://en.wikipedia.org/wiki/AES_key_schedule
 * https://en.wikipedia.org/wiki/Rijndael_S-box
 * https://en.wikipedia.org/wiki/Rijndael_MixColumns
 
-# I need to add exceptions for keys that are too long !!!!!#
+# I'm not sure I'm generating the keys correctly !!!!!#

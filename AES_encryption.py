@@ -319,21 +319,23 @@ def RC(i):
 def g_function(w, round_number):
 
     V = []
-    #do the shuffling step
+    #do the shuffling step, rotWord
     V.append(w[8:16])
     V.append(w[16:24])
     V.append(w[24:32])
     V.append(w[0:8])
 
+    #This is SubWord
     #pass all the values through an S_box
     for i, v in enumerate(V):
         V[i] = int(AES_S_box(v), 2)
         
-
+        
+    #XOR the subkey with the round number
     #XOR V[0] with RC[round number]
     V[0] ^= RC(round_number)
 
-
+    #
     #recombine the result into a single result string
     result = ''
     for i in range(4):
@@ -377,6 +379,8 @@ def h_function(w):
 def gen_128_bit_keys(key):
 
     if len(key) > 16:
+        
+        raise Exception('Key is too long for AES-128')
 
         print("********************************************************")
         print("** Your password is too long. This isn't going to work **")
@@ -398,12 +402,12 @@ def gen_128_bit_keys(key):
     W = []
 
 
-    #first round keys
+    #first round keys are just the input key in 32 bit words
     for i in range(wsize):
         W.append(k[(i*32):((i*32)+32)])
 
 
-
+    #now we are going to generate another 160 bytes of expanded key
     for i in range(10):
         
         #little w is the result from the last round in
@@ -414,13 +418,19 @@ def gen_128_bit_keys(key):
             w.append(int(W[((i*4) + l)], 2))
 
 
-
+        #g function is SubWord(RotWord(W_{i-1})) XOR rc_{i}
         g_result = g_function(W[-1], i)
+        
+        #N=4
 
         #do the XORing on the temporay w vector
+        #set Wi=W_{i-N} XOR g_function 
         w[0] ^= g_result
+        #set wi = w_{i-N} XOR W_{i-1}
         w[1] ^= w[0]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[2] ^= w[1]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[3] ^= w[2]
         
         #save the calculated values for W
@@ -443,6 +453,7 @@ def gen_192_bit_keys(key):
 
     if len(key) > 24:
 
+        raise Exception('Key is too long for AES-192')
         print("********************************************************")
         print("** Your passwords is too long. This isn't going to work **")
         print("********************************************************")
@@ -483,11 +494,17 @@ def gen_192_bit_keys(key):
         g_result = g_function(W[-1], i)
 
         #do the XORing on the temporay w vector
+        #set Wi=W_{i-N} XOR g_function 
         w[0] ^= g_result
+        #set wi = w_{i-N} XOR W_{i-1}
         w[1] ^= w[0]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[2] ^= w[1]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[3] ^= w[2]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[4] ^= w[3]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[5] ^= w[4]
 
         #save the calculated values for W
@@ -527,6 +544,7 @@ def gen_256_bit_keys(key):
 
     if len(key) > 32:
 
+        raise Exception('Key is too long for AES-256')
         print("********************************************************")
         print("** Your passwords is too long. This isn't going to work **")
         print("********************************************************")
@@ -563,16 +581,25 @@ def gen_256_bit_keys(key):
             w.append(int(W[((i*4) + l)], 2))
 
         g_result = g_function(W[-1], i)
+        #the h_function is a SubWord function
         h_result = h_function(W[-5])
 
         #do the XORing on the temporay w vector
+        #set Wi=W_{i-N} XOR g_function 
         w[0] ^= g_result
+        #set wi = w_{i-N} XOR W_{i-1}
         w[1] ^= w[0]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[2] ^= w[1]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[3] ^= w[2]
+        #set Wi=W_{i-N} XOR h_function 
         w[4] ^= h_result
+        #set wi = w_{i-N} XOR W_{i-1}
         w[5] ^= w[4]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[6] ^= w[5]
+        #set wi = w_{i-N} XOR W_{i-1}
         w[7] ^= w[6]
 
         #save the calculated values for W
