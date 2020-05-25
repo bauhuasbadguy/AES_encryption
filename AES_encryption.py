@@ -325,8 +325,6 @@ def g_function(w, round_number):
     V.append(w[24:32])
     V.append(w[0:8])
 
-
-
     #pass all the values through an S_box
     for i, v in enumerate(V):
         V[i] = int(AES_S_box(v), 2)
@@ -359,12 +357,10 @@ def h_function(w):
     V.append(w[24:32])
 
 
-
     #pass all the values through an S_box
     for i, v in enumerate(V):
         V[i] = int(AES_S_box(v), 2)
         
-
 
     #recombine the result into a single result string
     result = ''
@@ -506,8 +502,6 @@ def gen_192_bit_keys(key):
 
         w.append(int(W[((i*4) + l)], 2))
 
-
-
     g_result = g_function(W[-1], i)
 
     #do the XORing on the temporay w vector
@@ -516,22 +510,15 @@ def gen_192_bit_keys(key):
     w[2] ^= w[1]
     w[3] ^= w[2]
 
-
     #save the calculated values for W
     for l in range(len(w)):
 
         W.append(pad_number(w[l], 32))
-
-
-
-
-
             
     #convert the W keys into decimal intigers for XORing
     for i, w in enumerate(W):
 
         W[i] = int(w, 2)
-
 
     return W
 
@@ -575,8 +562,6 @@ def gen_256_bit_keys(key):
 
             w.append(int(W[((i*4) + l)], 2))
 
-
-
         g_result = g_function(W[-1], i)
         h_result = h_function(W[-5])
 
@@ -602,8 +587,6 @@ def gen_256_bit_keys(key):
 
         w.append(int(W[((i*4) + l)], 2))
 
-
-
     g_result = g_function(W[-1], i)
 
     #do the XORing on the temporay w vector
@@ -617,9 +600,7 @@ def gen_256_bit_keys(key):
     for l in range(len(w)):
 
         W.append(pad_number(w[l], 32))
-
-
-            
+ 
     #convert the W keys into decimal intigers for XORing
     for i, w in enumerate(W):
 
@@ -785,10 +766,8 @@ def last_inv_key_addition(M, W):
 
         c[i] = pad_number(c[i], 32)
 
-        
         C = C + c[i]
 
-        
     C = int(C,2)
 
     C = num2text(C)
@@ -800,7 +779,6 @@ def last_inv_key_addition(M, W):
 #inverse of the byte substitution step
 def Inv_byte_substitution(M):
 
-    
     c = []
     for i in range(len(M)):
 
@@ -1072,12 +1050,8 @@ def AES_encrypt(plain_text, password, key_length = 128):
         C = C + AES_encrypt_block(p1, W)[0]
         text.append(AES_encrypt_block(p1, W)[1])
 
-
     bin_C = C
     hex_C = hex(int(C,2))
-    
-    
-
 
     #create the cypher text, this is just to look at since it will
     #contain characters that will interfer with the string function
