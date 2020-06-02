@@ -21,7 +21,7 @@ The first 4, 32 bit words are simply the key. Next the rcon value is set to 1 an
 
 g(W<sub>i</sub>) = SubWord(RotWord(W<sub>i</sub>)) &bigoplus; RC<sub>i/N</sub>
 
-where RotWord is a 8 bit circular shift and SubWord applies a substitution box to each byte in the word. The value of RC<sub>i/N</sub> is given by the table below. Note these values are the same for all versions of AES so it will not be restated. Also note that the values for RC<sub>j</sub> are expressed in base 16.
+where RotWord is a 8 bit circular shift and SubWord applies a substitution box to each byte in the word. The value of RC<sub>i/N</sub> is given by the table below. Note these values are the same for all versions of AES and so will not be restated. Also note that the values for RC<sub>j</sub> are expressed in base 16.
 
 | i              | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 |
 |----------------|----|----|----|----|----|----|----|----|----|----|
@@ -31,7 +31,7 @@ This then gives a result where if the word number, i, satisfies i%N = 0 and i >=
 
 W<sub>i = W<sub>i-N</sub> &bigoplus; g(W<sub>i-1</sub>)
 
-When i is not divisable by N then the new word is found using the logic shown below.
+When i is not divisible by N then the new word is found using the logic shown below.
 
 W<sub>i</sub> = W<sub>i-N</sub> &bigoplus; W<sub>i-1</sub>
 
@@ -93,7 +93,7 @@ This procedure is shown in a very basic block diagram below
 
 (Note I convert from message to list to matrix and back again many times in my shockingly poor implementation, you should not do this but I'm too lazy to go back and fix it. I wrote this code 4 years ago and am only now doing the README.)
 
-We will now discus each of these steps in turn.
+We will now discus each of these four steps in turn.
 
 #### subBytes step ####
 
