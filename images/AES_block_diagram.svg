@@ -11,7 +11,7 @@
    inkscape:export-xdpi="96"
    inkscape:export-filename="/home/stuart/Documents/encrytion_stuff/AES_encryption/images/AES_block_diagram.png"
    sodipodi:docname="AES_block_diagram.svg"
-   inkscape:version="1.0 (6e3e5246a0, 2020-05-07)"
+   inkscape:version="1.0.2 (1.0.2+r75+1)"
    id="svg1048"
    version="1.1"
    viewBox="0 0 170 305"
@@ -293,15 +293,15 @@
   <sodipodi:namedview
      inkscape:window-maximized="1"
      inkscape:window-y="27"
-     inkscape:window-x="67"
-     inkscape:window-height="1025"
-     inkscape:window-width="1853"
+     inkscape:window-x="72"
+     inkscape:window-height="1016"
+     inkscape:window-width="1848"
      showgrid="false"
      inkscape:document-rotation="0"
      inkscape:current-layer="g3027"
      inkscape:document-units="mm"
-     inkscape:cy="441.22977"
-     inkscape:cx="374.72683"
+     inkscape:cy="602.31534"
+     inkscape:cx="156.76601"
      inkscape:zoom="0.49497475"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -317,7 +317,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -331,6 +331,13 @@
       <g
          id="g3027"
          transform="translate(-31.966496,-50.78164)">
+        <rect
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:1;stroke-linejoin:round"
+           id="rect3239"
+           width="167.63794"
+           height="302.72906"
+           x="30.162102"
+           y="21.75153" />
         <rect
            y="21.75153"
            x="30.162102"
